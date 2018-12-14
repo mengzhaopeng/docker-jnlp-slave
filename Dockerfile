@@ -11,4 +11,10 @@ RUN curl -fSL "https://${BASE_URL}/linux/static/stable/x86_64/docker-${DOCKER_VE
         && tar -xvzf /tmp/docker-ce.tgz --directory="/usr/local/bin" --strip-components=1 docker/docker \
         && rm /tmp/docker-ce.tgz
 
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends sudo \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN echo "jenkins ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/jenkins
+
 USER jenkins
