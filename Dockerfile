@@ -20,10 +20,12 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #  THE SOFTWARE.
 
-FROM jenkins/slave:3.27-1
-MAINTAINER Oleg Nenashev <o.v.nenashev@gmail.com>
-LABEL Description="This is a base image, which allows connecting Jenkins agents via JNLP protocols" Vendor="Jenkins project" Version="3.27"
+FROM jenkinsci/jnlp-slave:3.27-1
 
-COPY jenkins-slave /usr/local/bin/jenkins-slave
+MAINTAINER mzp <qiuranke@gmail.com>
 
-ENTRYPOINT ["jenkins-slave"]
+USER root
+
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - && apt-get update && apt-get install -y nodejs && rm -rf /var/lib/apt/lists/*
+
+USER jenkins
